@@ -91,14 +91,17 @@ public class MoneySystem : MonoBehaviour
         if (currency >= selectedItem.price)
         {
             currency -= selectedItem.price; // หักเงิน
-            Instantiate(selectedItem.prefab, spawnPoint.position, Quaternion.identity); // สร้างไอเท็มที่จุด Spawn เฉพาะ
+
+            // ปรับค่า Z Position เป็น 0
+            Vector3 spawnPosition = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0);
+
+            // สร้างไอเท็มที่จุด Spawn ที่กำหนด Z เป็น 0
+            GameObject newItem = Instantiate(selectedItem.prefab, spawnPosition, Quaternion.identity);
+
             UpdateUI();
             audioSource.PlayOneShot(buySuccessSound); // เล่นเสียงซื้อสำเร็จ
             Debug.Log("Purchased: " + selectedItem.itemName);
-            Debug.Log("Spawned: " + selectedItem.itemName + " at " + spawnPoint.position);
-            GameObject newItem = Instantiate(selectedItem.prefab, spawnPoint.position, Quaternion.identity);
-            newItem.SetActive(true); // บังคับให้เปิดการแสดงผล
-            Debug.Log("Spawned: " + newItem.name + " | Active: " + newItem.activeSelf);
+            Debug.Log("Spawned: " + selectedItem.itemName + " at " + spawnPosition);
         }
         else
         {
@@ -106,6 +109,7 @@ public class MoneySystem : MonoBehaviour
             Debug.Log("Not enough money!");
         }
     }
+
     public void BuyAutoClicker()
     {
         if (currency >= autoClickerCost)

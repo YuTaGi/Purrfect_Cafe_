@@ -10,4 +10,5 @@ public class ShopItem : MonoBehaviour
     public GameObject prefab; // Prefab ที่จะสร้าง
     public int price;         // ราคาของไอเท็ม
 
+
 }
